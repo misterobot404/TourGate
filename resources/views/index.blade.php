@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
-    <title>TourGIS</title>
+    <title>TourGate</title>
     <link href="{{asset('favicon.ico')}}" rel="icon">
     <!-- media + onload its trick to triggering an asynchronous stylesheet download -->
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons&display=block" rel="stylesheet" media="trick" onload="media='all'">

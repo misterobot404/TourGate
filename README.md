@@ -1,85 +1,185 @@
-<p align="center"><img src="https://res.cloudinary.com/dtfbvvkyp/image/upload/v1566331377/laravel-logolockup-cmyk-red.svg" width="400"></p>
-
 <p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
+   <a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
 </p>
 
-## About Laravel
+# TourGate
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Getting Started
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+These instructions will provide you with an easy way to run a project on your local computer in Homestead for development and testing purposes.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### Installing
 
-## Learning Laravel
+Install [VirtualBox](https://www.virtualbox.org/wiki/Downloads) and [Vagrant](https://www.vagrantup.com/downloads.html).
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Add the laravel/homestead box to your Vagrant
+```
+vagrant box add laravel/homestead
+```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Install Homestead by cloning the repository onto your host machine
+```
+git clone https://github.com/laravel/homestead.git  ~/Homestead
+```
 
-## Laravel Sponsors
+Create Homestead.yaml config file
+```
+cd ~/Homestead
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+// Mac / Linux...
+bash init.sh
 
-### Premium Partners
+// Windows...
+init.bat
+```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
+Edit Homestead.yaml config
+```
+// Make sure IP is set to
+ip: "192.168.10.10"
+```
 
-### Community Sponsors
+```
+// Commented
+#authorize: ~/.ssh/id_rsa.pub
+#keys:
+#    - ~/.ssh/id_rsa
+```
 
-<a href="https://op.gg"><img src="http://opgg-static.akamaized.net/icon/t.rectangle.png" width="150"></a>
+```
+// Change
 
-- [UserInsights](https://userinsights.com)
-- [Fragrantica](https://www.fragrantica.com)
-- [SOFTonSOFA](https://softonsofa.com/)
-- [User10](https://user10.com)
-- [Soumettre.fr](https://soumettre.fr/)
-- [CodeBrisk](https://codebrisk.com)
-- [1Forge](https://1forge.com)
-- [TECPRESSO](https://tecpresso.co.jp/)
-- [Runtime Converter](http://runtimeconverter.com/)
-- [WebL'Agence](https://weblagence.com/)
-- [Invoice Ninja](https://www.invoiceninja.com)
-- [iMi digital](https://www.imi-digital.de/)
-- [Earthlink](https://www.earthlink.ro/)
-- [Steadfast Collective](https://steadfastcollective.com/)
-- [We Are The Robots Inc.](https://watr.mx/)
-- [Understand.io](https://www.understand.io/)
-- [Abdel Elrafa](https://abdelelrafa.com)
-- [Hyper Host](https://hyper.host)
-- [Appoly](https://www.appoly.co.uk)
-- [云软科技](http://www.yunruan.ltd/)
+folders:
+    - map: ~/code
+      to: /home/vagrant/code
 
-## Contributing
+sites:
+    - map: homestead.test
+      to: /home/vagrant/code/public
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+// To
 
-## Code of Conduct
+folders:
+    - map: ~/Source/TourGate
+      to: /home/vagrant/TourGate
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+sites:
+    - map: TourGate.test
+      to: /home/vagrant/TourGate/public
+```
+
+Get TourGate
+```
+cd ~/Source
+git clone https://github.com/misterobot404/TourGate.git
+```
+
+### Deployment
+
+Connect to Homestead.
+
+Update dependencies
+
+```
+cd ~/TourGate/
+
+composer update
+npm install -g npm
+npm install
+npm update
+```
+
+Run the migration to change the application database schema
+```
+php artisan migrate --seed
+php artisan passport:install
+```
+
+The project is ready for launch and testing.
+
+#### Advanced NGINX configuration
+
+Set http max size
+```
+sudo nano /etc/nginx/nginx.conf
+
+// Add to http context
+client_max_body_size 4M;
+```
+
+Enable using precompressed files
+
+```
+sudo nano /etc/nginx/nginx.conf
+
+// Add to http context
+client_max_body_size 4M;
+
+gzip_static on;
+gzip_min_length 1400;
+gzip_comp_level 9;
+```
+
+Enable caching
+
+```
+sudo nano /etc/nginx/sites-available/TourGate.test
+
+// Add caching to the location
+
+// Example
+location = /favicon.ico {   
+        expires 7d;
+        add_header Cache-Control "public, no-transform";
+    }
+```
+
+### Running
+
+Run Homestead and application on IP 192.168.10.10 (initial startup takes longer)
+
+```
+cd ~/Homestead
+vagrant up
+```
+
+To connect to Homestead (for change the environment settings)
+```
+cd ~/Homestead
+vagrant up
+```
+
+Shut down Homestead and application
+```
+vagrant halt
+```
+
+## Built With
+
+Backend
+* [Homestead](https://laravel.com/docs/homestead) - official Vagrant box pre-packaged development environment
+* [Laravel](https://laravel.com/) - RESTful API service. API response format is HTTP status + JSON based on the [JSend](https://github.com/omniti-labs/jsend) specification
+
+Frontend
+* [Vue.js](https://vuejs.org/) - Single-page application
+* [Vue Router](https://router.vuejs.org/) - Routing
+* [Vuex](https://vuex.vuejs.org/) - State management
+* [Vuetify](https://vuetifyjs.com/en/) - UI Library
+* [Leaflet](https://leafletjs.com/) - Open-source JavaScript library for interactive maps
+
+## Authors
+
+* **Alexander Zakusilo** - *Programmer* - [misterobot404](https://github.com/misterobot404)
+
+## Browser compatibility
+
+Supported all browsers except IE old versions.
 
 ## Security Vulnerabilities
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+If you discover a security vulnerability within MapHelper, please send an e-mail to misterobot via [misterobot404@gmail.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+TourGate is commercial software. No license.
+

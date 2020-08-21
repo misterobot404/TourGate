@@ -1,5 +1,5 @@
 <template>
-    <v-container fill-height>
+    <v-container fill-height style="height: 90vh !important">
         <v-col class="text-center">
                 <v-img
                     class="mb-4"

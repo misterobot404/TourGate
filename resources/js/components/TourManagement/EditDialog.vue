@@ -1,105 +1,238 @@
 <template>
-    <v-dialog
-        :value="showEditDialog"
-        @input="v => $emit('update:showEditDialog', v)"
-        max-width="540"
-        overlay-opacity="0.2"
-    >
-        <v-card>
-            <!-- Header -->
-            <v-toolbar
-                height="68"
-                flat
-                class="pr-1"
-            >
-                <v-icon
-                    x-large
-                    class="mr-3"
+    <div>
+        <v-dialog
+            :value="showEditDialog"
+            @input="v => $emit('update:showEditDialog', v)"
+            :max-width="!editableTour.isSection ? 1140 : 540"
+            overlay-opacity="0.2"
+        >
+            <v-card>
+                <!-- Header -->
+                <v-toolbar
+                    height="68"
+                    flat
+                    class="pr-1"
                 >
-                    edit
-                </v-icon>
-                <v-toolbar-title> Редактирование <span v-if="editableTour.isSection">категории</span><span v-else>тура</span></v-toolbar-title>
-            </v-toolbar>
-            <v-divider/>
-            <!-- Body -->
-            <v-card-text class="pb-0">
-                <v-form ref="form" v-model="valid">
-                    <v-container class="pb-0">
-                        <v-row>
-                            <!-- Title -->
-                            <v-col cols="12" class="pb-0 pt-3">
-                                <v-text-field
-                                    label="Название"
-                                    filled
-                                    v-model.trim="editableTour.title"
-                                    :rules="[
-                                        v => !!v || 'Введите название'
-                                    ]"
-                                    required
-                                />
-                            </v-col>
-                            <!-- Image -->
-                            <v-col cols="12" class="pb-0 pt-1">
-                                <v-file-input
-                                    label="Медиа"
-                                    filled
-                                    v-model="editableTour.image"
-                                    accept="image/*"
-                                    prepend-icon="add_a_photo"
-                                    required
-                                />
-                            </v-col>
-                            <!-- Description -->
-                            <v-col cols="12" class="pb-0 pt-1">
-                                <v-textarea
-                                    filled
-                                    label="Описание"
-                                    auto-grow
-                                    v-model.trim="editableTour.description"
-                                    :rules="[v => !!v || 'Введите описание']"
-                                    required
-                                />
-                            </v-col>
-                            <!-- Source Url -->
-                            <v-col v-if="!editableTour.isSection" cols="12" class="pb-0 pt-1">
-                                <v-text-field
-                                    label="Ссылка на источник"
-                                    filled
-                                    v-model.trim="editableTour.source_url"
-                                    :rules="[
-                                        v => !!v || 'Введите ссылку на источник'
-                                    ]"
-                                    required
-                                />
-                            </v-col>
-                        </v-row>
-                    </v-container>
-                </v-form>
-            </v-card-text>
-            <!-- Footer -->
-            <v-card-actions class="px-9 pb-4">
-                <v-spacer></v-spacer>
-                <v-btn
-                    class="px-7"
-                    rounded
-                    depressed
-                    @click="getEditableTourClone"
-                >
-                    Сброс
-                </v-btn>
-                <v-btn
-                    class="px-7"
-                    rounded
-                    depressed
-                    :loading="loading"
-                    :disabled="!valid"
-                    @click="updateTour"
-                >
-                    Подтвердить
-                </v-btn>
-            </v-card-actions>
-        </v-card>
-    </v-dialog>
+                    <v-icon
+                        x-large
+                        class="mr-3"
+                    >
+                        edit
+                    </v-icon>
+                    <v-toolbar-title> Редактирование <span v-if="editableTour.isSection">категории</span><span v-else>тура</span></v-toolbar-title>
+                </v-toolbar>
+                <v-divider/>
+                <!-- Body -->
+                <v-card-text class="pb-0">
+                    <v-form ref="form" v-model="valid">
+                        <v-container class="pb-0">
+                            <v-row no-gutters>
+                                <v-col>
+                                    <v-row>
+                                        <v-card-subtitle class="pb-1 pt-3">Информация о {{!editableTour.isSection ? 'туре' : 'категории'}}*</v-card-subtitle>
+                                        <!-- title -->
+                                        <v-col cols="12" class="pb-0 pt-3">
+                                            <v-text-field
+                                                label="Название*"
+                                                filled
+                                                v-model.trim="editableTour.title"
+                                                :rules="[ v => !!v || 'Введите название' ]"
+                                                required
+                                            />
+                                        </v-col>
+                                        <!-- Image -->
+                                        <v-col cols="12" class="pb-0 pt-1">
+                                            <div v-if="editableTour.image_url" class="d-flex mb-8">
+                                                <v-text-field
+                                                    :value="editableTour.image_url"
+                                                    prepend-icon="add_a_photo"
+                                                    readonly
+                                                    hide-details
+                                                    label="Медиа"
+                                                    filled
+                                                />
+                                                <v-icon class="ml-2" @click="editableTour.image_url = null">
+                                                    close
+                                                </v-icon>
+                                            </div>
+                                            <v-file-input
+                                                v-else
+                                                label="Медиа"
+                                                filled
+                                                v-model="editableTour.image"
+                                                :rules="[
+                                            v => !!v || 'Выберите картинку',
+                                            v => (!!v && v.size < 4e6) || 'Выберите картинку меньше 4 Mб'
+                                        ]"
+                                                accept="image/*"
+                                                prepend-icon="add_a_photo"
+                                                required
+                                            />
+                                        </v-col>
+                                        <!-- description -->
+                                        <v-col cols="12" class="pb-0 pt-1">
+                                            <v-textarea
+                                                filled
+                                                label="Описание*"
+                                                auto-grow
+                                                v-model.trim="editableTour.description"
+                                                :rules="[v => !!v || 'Введите описание']"
+                                                required
+                                            />
+                                        </v-col>
+                                        <!-- address -->
+                                        <v-col
+                                            v-if="!editableTour.isSection"
+                                            cols="12"
+                                            class="pb-0 pt-1"
+                                        >
+                                            <v-text-field
+                                                label="Месторасположение тур. объекта*"
+                                                filled
+                                                v-model.trim="editableTour.address"
+                                                :rules="[ v => !!v || 'Введите месторасположение тур. объекта' ]"
+                                                required
+                                            />
+                                        </v-col>
+                                    </v-row>
+                                </v-col>
+                                <template v-if="!editableTour.isSection">
+                                    <v-divider class="mx-3" vertical/>
+                                    <v-col>
+                                        <v-row>
+                                            <v-card-subtitle class="pb-1 pt-3">Информация об организации</v-card-subtitle>
+                                            <!-- organization_name -->
+                                            <v-col cols="12" class="pb-0 pt-3">
+                                                <v-text-field
+                                                    label="Название организации"
+                                                    filled
+                                                    v-model.trim="editableTour.organization_name"
+                                                    required
+                                                />
+                                            </v-col>
+                                            <!-- organization_phone -->
+                                            <v-col cols="12" class="pb-0 pt-1">
+                                                <v-text-field
+                                                    label="Телефон организации"
+                                                    filled
+                                                    v-model.trim="editableTour.organization_phone"
+                                                    required
+                                                />
+                                            </v-col>
+                                            <!-- organization_email -->
+                                            <v-col cols="12" class="pb-0 pt-1">
+                                                <v-text-field
+                                                    label="Эл. почта организации"
+                                                    filled
+                                                    v-model.trim="editableTour.organization_email"
+                                                    required
+                                                />
+                                            </v-col>
+                                            <!-- organization_address -->
+                                            <v-col cols="12" class="pb-0 pt-1">
+                                                <v-text-field
+                                                    label="Адрес организации"
+                                                    filled
+                                                    v-model.trim="editableTour.organization_address"
+                                                    required
+                                                />
+                                            </v-col>
+                                            <!-- source_url -->
+                                            <v-col cols="12" class="pb-0 pt-1">
+                                                <v-text-field
+                                                    label="Ссылка на источник"
+                                                    filled
+                                                    v-model.trim="editableTour.source_url"
+                                                    required
+                                                />
+                                            </v-col>
+                                        </v-row>
+                                    </v-col>
+                                    <v-divider class="mx-3" vertical/>
+                                    <v-col cols="4">
+                                        <v-row>
+                                            <v-card-subtitle class="pb-1 pt-3">Информация о заявителе</v-card-subtitle>
+                                            <!-- author -->
+                                            <v-col cols="12" class="pb-0 pt-3">
+                                                <v-text-field
+                                                    disabled
+                                                    label="Автор"
+                                                    filled
+                                                    v-model.trim="editableTour.author"
+                                                    required
+                                                />
+                                            </v-col>
+                                            <!-- author_phone -->
+                                            <v-col cols="12" class="pb-0 pt-3">
+                                                <v-text-field
+                                                    disabled
+                                                    label="Телефон заявителя"
+                                                    filled
+                                                    v-model.trim="editableTour.author_phone"
+                                                    required
+                                                />
+                                            </v-col>
+                                            <!-- author_email -->
+                                            <v-col cols="12" class="pb-0 pt-1">
+                                                <v-text-field
+                                                    disabled
+                                                    label="Эл. почта заявителя"
+                                                    filled
+                                                    v-model.trim="editableTour.author_email"
+                                                    required
+                                                />
+                                            </v-col>
+                                            <!-- author_doc -->
+                                            <v-col cols="12" class="pb-0 pt-1" @click="getFiles">
+                                                <v-select
+                                                    :items="editableTour.author_doc"
+                                                    :value="editableTour.author_doc"
+                                                    chips
+                                                    prepend-icon="post_add"
+                                                    multiple
+                                                    readonly
+                                                    label="Документы"
+                                                />
+                                            </v-col>
+                                        </v-row>
+                                    </v-col>
+                                </template>
+                            </v-row>
+                        </v-container>
+                    </v-form>
+                </v-card-text>
+                <!-- Footer -->
+                <v-card-actions class="px-9 pb-4">
+                    <v-spacer></v-spacer>
+                    <v-btn
+                        class="px-7"
+                        rounded
+                        depressed
+                        @click="$emit('update:showEditDialog', false); getEditableTourClone()"
+                    >
+                        Отмена
+                    </v-btn>
+                    <v-btn
+                        class="px-7"
+                        rounded
+                        depressed
+                        :loading="loading"
+                        :disabled="!valid"
+                        @click="updateTour"
+                    >
+                        Подтвердить
+                    </v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
+
+        <v-snackbar
+            v-model="snackbar"
+            :timeout="3000"
+        >
+            Туристический объект изменён.
+        </v-snackbar>
+    </div>
 </template>
 
 <script>
@@ -114,7 +247,8 @@ export default {
         return {
             valid: null,
             loading: false,
-            editableTour: null
+            editableTour: null,
+            snackbar: false,
         }
     },
     computed: {
@@ -131,10 +265,16 @@ export default {
     },
     methods: {
         ...mapActions('tours', {
-            updateTourAction: 'updateTour'
+            updateTourAction: 'updateTour',
+            getFilesActions: 'getFiles',
         }),
         getEditableTourClone() {
             this.editableTour = Object.assign({}, this.tours.find(obj => obj.id === this.editableTourId));
+            if (this.editableTour.author_doc) {
+                this.editableTour.author_doc.forEach(function (part, index) {
+                    this[index] = this[index].replace(/^.*[\\\/]/, '');
+                }, this.editableTour.author_doc); // use arr as this
+            }
         },
         updateTour() {
             let formData = new FormData();
@@ -144,6 +284,11 @@ export default {
 
             if (!this.editableTour.isSection) {
                 formData.append('source_url', this.editableTour.source_url);
+                formData.append('address', this.editableTour.address);
+                formData.append('organization_name', this.editableTour.organization_name);
+                formData.append('organization_phone', this.editableTour.organization_phone);
+                formData.append('organization_email', this.editableTour.organization_email);
+                formData.append('organization_address', this.editableTour.organization_address);
             }
 
             let payload = {
@@ -152,10 +297,18 @@ export default {
             }
 
             this.loading = true;
-            this.updateTourAction(payload).then(() => {
-                this.loading = false;
-                this.$emit('update:showEditDialog', false)
-            })
+            this.updateTourAction(payload)
+                .then(() => {
+                    this.$emit('update:showEditDialog', false);
+                    this.snackbar = true;
+                })
+                .finally(() => {
+                    this.loading = false;
+                })
+
+        },
+        getFiles() {
+            this.getFilesActions()
         }
     }
 }

@@ -7,27 +7,21 @@ export const routes = [
     },
     {
         path: '/admin',
-        name: 'Admin',
-        redirect: '/admin/tours'
+        redirect: '/admin/tours/published'
     },
-    // user pages
+    // tours
     {
         path: '/tours/:id?',
         name: 'Tours',
         component: () => import(/* webpackChunkName: 'tours' */ '@/pages/Tours'),
-        props: true
+        props: true,
+        meta: { layout: "DefaultLayout" }
     },
-    // admin pages
+    // tour management
     {
-        path: '/admin/tours/:id?',
+        path: '/admin/tours/:status/:id?',
         name: 'TourManagement',
         component: () => import(/* webpackChunkName: 'tour-management' */ '@/pages/TourManagement'),
-        meta: { layout: "AdminLayout" }
-    },
-    {
-        path: '/admin/applications',
-        name: 'ApplicationManagement',
-        component: () => import(/* webpackChunkName: 'application-management' */ '@/pages/ApplicationManagement'),
         meta: { layout: "AdminLayout" }
     },
     // url not found

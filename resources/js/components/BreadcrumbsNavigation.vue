@@ -7,13 +7,11 @@
     >
         <v-breadcrumbs large :items="breadcrumbs" class="mb-4">
             <template v-slot:item="{ item }">
-                <v-breadcrumbs-item
-                    @click="$route.fullPath === item.href ? $router.go(0) : $router.push(item.href)"
-                    :style="{ textShadow: item.href === $route.fullPath ? '0px 0px 4px rgba(255,255,255,0.3)' : 'none' }"
-                    style="cursor: pointer; "
-                >
-                    {{ item.text.toUpperCase() }}
-                </v-breadcrumbs-item>
+                <router-link :to="item.href" class="text-decoration-none text-uppercase" style="color: white">
+                    <v-breadcrumbs-item :class="item.href === $route.path ? 'breadcrumbs-item-active' : null">
+                        {{ item.text }}
+                    </v-breadcrumbs-item>
+                </router-link>
             </template>
             <template v-slot:divider>
                 <v-icon>chevron_right</v-icon>
@@ -37,3 +35,8 @@ export default {
     },
 }
 </script>
+
+<style lang="sass" scoped>
+.breadcrumbs-item-active
+    text-shadow: 0 0 4px rgba(255, 255, 255, 0.3)
+</style>

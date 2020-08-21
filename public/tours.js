@@ -1,1 +1,648 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[5],{209:function(t,e,r){"use strict";var n=r(13);function o(t,e){var r=Object.keys(t);if(Object.getOwnPropertySymbols){var n=Object.getOwnPropertySymbols(t);e&&(n=n.filter((function(e){return Object.getOwnPropertyDescriptor(t,e).enumerable}))),r.push.apply(r,n)}return r}function a(t){for(var e=1;e<arguments.length;e++){var r=null!=arguments[e]?arguments[e]:{};e%2?o(Object(r),!0).forEach((function(e){i(t,e,r[e])})):Object.getOwnPropertyDescriptors?Object.defineProperties(t,Object.getOwnPropertyDescriptors(r)):o(Object(r)).forEach((function(e){Object.defineProperty(t,e,Object.getOwnPropertyDescriptor(r,e))}))}return t}function i(t,e,r){return e in t?Object.defineProperty(t,e,{value:r,enumerable:!0,configurable:!0,writable:!0}):t[e]=r,t}var s={name:"Breadcrumbs",computed:a(a({},Object(n.e)("tours",["breadcrumbs"])),{},{sectionNotRoot:function(){return this.$route.params.id}})},c=r(16),l=r(17),u=r.n(l),d=r(260),f=r(216),v=r(43),p=r(42),b=Object(c.a)(s,(function(){var t=this,e=t.$createElement,r=t._self._c||e;return r("v-card",{directives:[{name:"show",rawName:"v-show",value:t.sectionNotRoot,expression:"sectionNotRoot"}],staticStyle:{background:"rgba(30,30,30, 0.4)"},attrs:{flat:"",dark:""}},[r("v-breadcrumbs",{staticClass:"mb-4",attrs:{large:"",items:t.breadcrumbs},scopedSlots:t._u([{key:"item",fn:function(e){var n=e.item;return[r("v-breadcrumbs-item",{staticStyle:{cursor:"pointer"},style:{textShadow:n.href===t.$route.fullPath?"0px 0px 4px rgba(255,255,255,0.3)":"none"},on:{click:function(e){t.$route.fullPath===n.href?t.$router.go(0):t.$router.push(n.href)}}},[t._v("\n                "+t._s(n.text.toUpperCase())+"\n            ")])]}},{key:"divider",fn:function(){return[r("v-icon",[t._v("chevron_right")])]},proxy:!0}])})],1)}),[],!1,null,null,null);e.a=b.exports;u()(b,{VBreadcrumbs:d.a,VBreadcrumbsItem:f.a,VCard:v.a,VIcon:p.a})},257:function(t,e,r){"use strict";r.r(e);var n=r(13),o=r(209);function a(t,e){var r=Object.keys(t);if(Object.getOwnPropertySymbols){var n=Object.getOwnPropertySymbols(t);e&&(n=n.filter((function(e){return Object.getOwnPropertyDescriptor(t,e).enumerable}))),r.push.apply(r,n)}return r}function i(t,e,r){return e in t?Object.defineProperty(t,e,{value:r,enumerable:!0,configurable:!0,writable:!0}):t[e]=r,t}var s={name:"CreateMapDialog",data:function(){return{dialog:!1,loading:!1,name:"",description:"",src:null,successful:!1}},computed:function(t){for(var e=1;e<arguments.length;e++){var r=null!=arguments[e]?arguments[e]:{};e%2?a(Object(r),!0).forEach((function(e){i(t,e,r[e])})):Object.getOwnPropertyDescriptors?Object.defineProperties(t,Object.getOwnPropertyDescriptors(r)):a(Object(r)).forEach((function(e){Object.defineProperty(t,e,Object.getOwnPropertyDescriptor(r,e))}))}return t}({},Object(n.e)("tours",["tours"])),methods:{clearField:function(){this.$refs.form.reset(),this.successful=!1},createMap:function(){var t=this;this.$refs.form.validate()&&(this.loading=!0,this.successful=!1,setTimeout((function(){t.loading=!1,t.successful=!0}),1500))}}},c=r(16),l=r(17),u=r.n(l),d=r(202),f=r(48),v=r(43),p=r(25),b=r(196),g=r(201),m=r(203),h=r(188),O=r(252),y=r(198),_=r(42),j=r(199),w=r(200),x=r(184),C=r(253),k=r(47),P=r(37),V=Object(c.a)(s,(function(){var t=this,e=t.$createElement,r=t._self._c||e;return r("v-dialog",{attrs:{"max-width":"460"},scopedSlots:t._u([{key:"activator",fn:function(e){var n=e.on;return[r("v-btn",t._g({staticClass:"mt-2 v-btn--active",attrs:{large:"",rounded:"",text:""}},n),[t._v("\n            Добавить\n        ")])]}}]),model:{value:t.dialog,callback:function(e){t.dialog=e},expression:"dialog"}},[t._v(" "),r("v-card",[r("v-toolbar",{staticClass:"pr-1",attrs:{height:"68",flat:""}},[r("v-icon",{staticClass:"mr-2",attrs:{"x-large":"",color:"green darken-2"}},[t._v("\n                add_location\n            ")]),t._v(" "),r("v-toolbar-title",[t._v(" Добавление места ")]),t._v(" "),r("v-spacer"),t._v(" "),r("v-btn",{attrs:{icon:""},on:{click:function(e){t.clearField(),t.dialog=!1}}},[r("v-icon",[t._v("close")])],1)],1),t._v(" "),r("v-divider"),t._v(" "),r("v-card-text",{staticClass:"pb-0"},[r("v-form",{ref:"form"},[r("v-container",{staticClass:"pb-0"},[r("v-alert",{staticClass:"my-2",attrs:{text:"",type:"success",prominent:"",color:"green darken-2"},model:{value:t.successful,callback:function(e){t.successful=e},expression:"successful"}},[t._v("\n                        Спасибо! Место будет добавлено после модерации.\n                    ")]),t._v(" "),r("v-row",[r("v-col",{staticClass:"pb-0 pt-3",attrs:{cols:"12"}},[r("v-text-field",{attrs:{label:"Название",filled:"",color:"green darken-2",rules:[function(t){return!!t||"Введите название"},function(e){return null===t.tours||void 0===t.tours.find((function(t){return t.title===e}))||"Это название уже используется"}],required:""},model:{value:t.name,callback:function(e){t.name="string"==typeof e?e.trim():e},expression:"name"}})],1),t._v(" "),r("v-col",{staticClass:"pb-0 pt-1",attrs:{cols:"12"}},[r("v-file-input",{attrs:{label:"Медиа",color:"green darken-3",filled:"",accept:"image/*","prepend-icon":"add_a_photo",rules:[function(t){return!!t||"Добавьте картинку"}],required:""},model:{value:t.src,callback:function(e){t.src=e},expression:"src"}})],1),t._v(" "),r("v-col",{staticClass:"pb-0 pt-1",attrs:{cols:"12"}},[r("v-textarea",{attrs:{filled:"",color:"green darken-2",label:"Описание",rules:[function(t){return!!t||"Введите описание"}],required:""},model:{value:t.description,callback:function(e){t.description="string"==typeof e?e.trim():e},expression:"description"}})],1)],1)],1)],1)],1),t._v(" "),r("v-card-actions",{staticClass:"px-9 pb-4"},[r("v-btn",{attrs:{text:""},on:{click:t.clearField}},[t._v("\n                Очистить\n            ")]),t._v(" "),r("v-spacer"),t._v(" "),r("v-btn",{staticClass:"px-7",attrs:{color:"green darken-1",outlined:"",rounded:"",loading:t.loading},on:{click:t.createMap}},[t._v("\n                Добавить\n            ")])],1)],1)],1)}),[],!1,null,null,null),S=V.exports;function T(t,e){var r=Object.keys(t);if(Object.getOwnPropertySymbols){var n=Object.getOwnPropertySymbols(t);e&&(n=n.filter((function(e){return Object.getOwnPropertyDescriptor(t,e).enumerable}))),r.push.apply(r,n)}return r}function D(t){for(var e=1;e<arguments.length;e++){var r=null!=arguments[e]?arguments[e]:{};e%2?T(Object(r),!0).forEach((function(e){$(t,e,r[e])})):Object.getOwnPropertyDescriptors?Object.defineProperties(t,Object.getOwnPropertyDescriptors(r)):T(Object(r)).forEach((function(e){Object.defineProperty(t,e,Object.getOwnPropertyDescriptor(r,e))}))}return t}function $(t,e,r){return e in t?Object.defineProperty(t,e,{value:r,enumerable:!0,configurable:!0,writable:!0}):t[e]=r,t}u()(V,{VAlert:d.a,VBtn:f.a,VCard:v.a,VCardActions:p.a,VCardText:p.b,VCol:b.a,VContainer:g.a,VDialog:m.a,VDivider:h.a,VFileInput:O.a,VForm:y.a,VIcon:_.a,VRow:j.a,VSpacer:w.a,VTextField:x.a,VTextarea:C.a,VToolbar:k.a,VToolbarTitle:P.a});var E={name:"Tours",components:{BreadcrumbsNavigation:o.a,CreateTourDialog:S},data:function(){return{firstLoading:!0}},computed:D(D({},Object(n.e)("tours",["tours"])),{},{last_section:function(){return void 0===this.tours.find((function(t){return!0===t.isSection}))}}),methods:D(D({},Object(n.b)("tours",{getToursAction:"getTours"})),{},{cardClickBehavior:function(t){t.isSection?this.$router.push({name:"Tours",params:{id:t.id}}):window.open(t.source_url)}}),created:function(){var t=this;this.getToursAction(this.$route.params.id).then((function(){t.firstLoading=!1}))},beforeRouteUpdate:function(t,e,r){this.getToursAction(t.params.id).then((function(){r()}))}},B=r(38),F=r(254),N=r(80),R=r(46),A=Object(c.a)(E,(function(){var t=this,e=t.$createElement,r=t._self._c||e;return r("div",[t.firstLoading?t._e():r("BreadcrumbsNavigation"),t._v(" "),r("v-row",{staticClass:"mb-6",attrs:{dense:""}},[t._l(t.tours,(function(e,n){return r("v-col",{key:e.title,staticClass:"text-center",attrs:{cols:t.$vuetify.breakpoint.xs?12:n%3?6:12}},[r("v-hover",{scopedSlots:t._u([{key:"default",fn:function(n){var o=n.hover;return[r("v-card",{staticClass:"overflow-hidden",staticStyle:{cursor:"pointer"},on:{click:function(r){return t.cardClickBehavior(e)}}},[r("v-img",{staticClass:"white--text align-end",attrs:{transition:"scale-transition",origin:"center center",height:"320px",src:e.image_url,alt:e.title,gradient:"to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"}},[r("v-fade-transition",[o?t._e():r("v-card-title",{staticClass:"display-1",domProps:{textContent:t._s(e.title)}})],1)],1),t._v(" "),r("v-fade-transition",[o?r("v-overlay",{staticClass:"px-8",attrs:{absolute:"",color:"#036358"}},[r("div",{staticClass:"title mx-auto",domProps:{innerHTML:t._s(e.description)}})]):t._e()],1)],1)]}}],null,!0)})],1)})),t._v(" "),t.last_section&&!t.firstLoading?r("v-col",{staticClass:"text-center",attrs:{cols:t.$vuetify.breakpoint.xs||(t.tours.length+1)%3?12:6}},[r("v-hover",{scopedSlots:t._u([{key:"default",fn:function(e){e.hover;return[r("v-card",{staticClass:"overflow-hidden",staticStyle:{background:"none"},attrs:{flat:""}},[r("div",{staticStyle:{height:"320px",background:"linear-gradient(to bottom, rgba(0,0,0,.1), rgba(0,0,0,.3))"}}),t._v(" "),r("v-overlay",{attrs:{absolute:"",opacity:"0.2",color:"#036358"}},[r("div",{staticClass:"title mx-auto",staticStyle:{"max-width":"70%"}},[t._v("\n                            Поделитесь интересным местом с другими!\n                        ")]),t._v(" "),r("CreateTourDialog")],1)],1)]}}],null,!1,2372976977)})],1):t._e()],2)],1)}),[],!1,null,null,null);e.default=A.exports;u()(A,{VCard:v.a,VCardTitle:p.c,VCol:b.a,VFadeTransition:B.c,VHover:F.a,VImg:N.a,VOverlay:R.a,VRow:j.a})}}]);
+(window["webpackJsonp"] = window["webpackJsonp"] || []).push([["tours"],{
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vuetify-loader/lib/loader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/Tours.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vuetify-loader/lib/loader.js??ref--10-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/Tours.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _components_BreadcrumbsNavigation_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/components/BreadcrumbsNavigation.vue */ "./resources/js/components/BreadcrumbsNavigation.vue");
+/* harmony import */ var _components_TourManagement_CreateDialog__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/components/TourManagement/CreateDialog */ "./resources/js/components/TourManagement/CreateDialog.vue");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "Tours",
+  components: {
+    BreadcrumbsNavigation: _components_BreadcrumbsNavigation_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
+    CreateTourDialog: _components_TourManagement_CreateDialog__WEBPACK_IMPORTED_MODULE_2__["default"]
+  },
+  data: function data() {
+    return {
+      firstLoading: true,
+      createDialog: false
+    };
+  },
+  computed: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])('tours', ['tours'])), {}, {
+    last_section: function last_section() {
+      return this.tours.find(function (element) {
+        return element.isSection === true;
+      }) === undefined;
+    }
+  }),
+  methods: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])('tours', {
+    getToursAction: 'getTours'
+  })), {}, {
+    // If the pressed card is a section, open children section, else open source_url on new tab
+    cardClickBehavior: function cardClickBehavior(tour) {
+      tour.isSection ? this.$router.push({
+        name: 'Tours',
+        params: {
+          id: tour.id
+        }
+      }) : window.open(tour.source_url, '_blank').focus();
+    }
+  }),
+  // get tours via API
+  created: function created() {
+    var _this = this;
+
+    this.getToursAction({
+      parent_id: this.$route.params.id
+    }).then(function () {
+      _this.firstLoading = false;
+    });
+  },
+  // get tours via API after route.param changes
+  beforeRouteUpdate: function beforeRouteUpdate(to, from, next) {
+    this.getToursAction({
+      parent_id: to.params.id
+    }).then(function () {
+      next();
+    });
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vuetify-loader/lib/loader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/Tours.vue?vue&type=template&id=5c70b83c&":
+/*!**********************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vuetify-loader/lib/loader.js??ref--10-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/Tours.vue?vue&type=template&id=5c70b83c& ***!
+  \**********************************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      !_vm.firstLoading ? _c("BreadcrumbsNavigation") : _vm._e(),
+      _vm._v(" "),
+      _c(
+        "v-row",
+        { staticClass: "mb-6", attrs: { dense: "" } },
+        [
+          _vm._l(_vm.tours, function(tour, index) {
+            return _c(
+              "v-col",
+              {
+                key: tour.title,
+                attrs: {
+                  cols: _vm.$vuetify.breakpoint.xs ? 12 : index % 3 ? 6 : 12
+                }
+              },
+              [
+                _c("v-hover", {
+                  scopedSlots: _vm._u(
+                    [
+                      {
+                        key: "default",
+                        fn: function(ref) {
+                          var hover = ref.hover
+                          return [
+                            _c(
+                              "v-card",
+                              {
+                                staticClass: "overflow-hidden",
+                                staticStyle: { cursor: "pointer" },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.cardClickBehavior(tour)
+                                  }
+                                }
+                              },
+                              [
+                                _c(
+                                  "v-img",
+                                  {
+                                    staticClass: "white--text align-end",
+                                    attrs: {
+                                      transition: "scale-transition",
+                                      origin: "center center",
+                                      height: "320px",
+                                      src: tour.image_url,
+                                      alt: tour.title,
+                                      gradient:
+                                        "to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
+                                    }
+                                  },
+                                  [
+                                    _c(
+                                      "v-fade-transition",
+                                      [
+                                        !hover
+                                          ? _c("v-card-title", {
+                                              staticClass: "display-1",
+                                              staticStyle: {
+                                                "word-break": "break-word"
+                                              },
+                                              domProps: {
+                                                textContent: _vm._s(tour.title)
+                                              }
+                                            })
+                                          : _vm._e()
+                                      ],
+                                      1
+                                    )
+                                  ],
+                                  1
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "v-fade-transition",
+                                  [
+                                    hover
+                                      ? _c(
+                                          "v-overlay",
+                                          {
+                                            staticClass: "px-8 text-center",
+                                            attrs: {
+                                              absolute: "",
+                                              color: "#036358"
+                                            }
+                                          },
+                                          [
+                                            _c("div", {
+                                              staticClass: "title",
+                                              staticStyle: {
+                                                "white-space": "pre-wrap"
+                                              },
+                                              domProps: {
+                                                textContent: _vm._s(
+                                                  tour.description
+                                                )
+                                              },
+                                              on: {
+                                                click: function($event) {
+                                                  $event.stopPropagation()
+                                                }
+                                              }
+                                            }),
+                                            _vm._v(" "),
+                                            tour.organization_name
+                                              ? _c("div", {
+                                                  staticClass: "title",
+                                                  domProps: {
+                                                    textContent: _vm._s(
+                                                      tour.organization_name
+                                                    )
+                                                  },
+                                                  on: {
+                                                    click: function($event) {
+                                                      $event.stopPropagation()
+                                                    }
+                                                  }
+                                                })
+                                              : _vm._e(),
+                                            _vm._v(" "),
+                                            tour.organization_address
+                                              ? _c("div", {
+                                                  staticClass: "title",
+                                                  domProps: {
+                                                    textContent: _vm._s(
+                                                      tour.organization_address
+                                                    )
+                                                  },
+                                                  on: {
+                                                    click: function($event) {
+                                                      $event.stopPropagation()
+                                                    }
+                                                  }
+                                                })
+                                              : _vm._e(),
+                                            _vm._v(" "),
+                                            tour.organization_phone
+                                              ? _c("div", {
+                                                  staticClass: "title",
+                                                  domProps: {
+                                                    textContent: _vm._s(
+                                                      tour.organization_phone
+                                                    )
+                                                  },
+                                                  on: {
+                                                    click: function($event) {
+                                                      $event.stopPropagation()
+                                                    }
+                                                  }
+                                                })
+                                              : _vm._e(),
+                                            _vm._v(" "),
+                                            tour.organization_email
+                                              ? _c("div", {
+                                                  staticClass: "title",
+                                                  domProps: {
+                                                    textContent: _vm._s(
+                                                      tour.organization_email
+                                                    )
+                                                  },
+                                                  on: {
+                                                    click: function($event) {
+                                                      $event.stopPropagation()
+                                                    }
+                                                  }
+                                                })
+                                              : _vm._e(),
+                                            _vm._v(" "),
+                                            tour.source_url
+                                              ? _c("div", {
+                                                  staticClass: "title",
+                                                  domProps: {
+                                                    textContent: _vm._s(
+                                                      tour.source_url
+                                                    )
+                                                  },
+                                                  on: {
+                                                    click: function($event) {
+                                                      $event.stopPropagation()
+                                                    }
+                                                  }
+                                                })
+                                              : _vm._e()
+                                          ]
+                                        )
+                                      : _vm._e()
+                                  ],
+                                  1
+                                )
+                              ],
+                              1
+                            )
+                          ]
+                        }
+                      }
+                    ],
+                    null,
+                    true
+                  )
+                })
+              ],
+              1
+            )
+          }),
+          _vm._v(" "),
+          _vm.last_section && !_vm.firstLoading
+            ? _c(
+                "v-col",
+                {
+                  staticClass: "text-center",
+                  attrs: {
+                    cols: _vm.$vuetify.breakpoint.xs
+                      ? 12
+                      : (_vm.tours.length + 1) % 3
+                      ? 12
+                      : 6
+                  }
+                },
+                [
+                  _c("v-hover", {
+                    scopedSlots: _vm._u(
+                      [
+                        {
+                          key: "default",
+                          fn: function(ref) {
+                            var hover = ref.hover
+                            return [
+                              _c(
+                                "v-card",
+                                {
+                                  staticClass: "overflow-hidden",
+                                  staticStyle: { background: "none" },
+                                  attrs: { flat: "" }
+                                },
+                                [
+                                  _c("div", {
+                                    staticStyle: {
+                                      height: "320px",
+                                      background:
+                                        "linear-gradient(to bottom, rgba(0,0,0,.1), rgba(0,0,0,.3))"
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-overlay",
+                                    {
+                                      attrs: {
+                                        absolute: "",
+                                        opacity: "0.2",
+                                        color: "#036358"
+                                      }
+                                    },
+                                    [
+                                      _c(
+                                        "div",
+                                        {
+                                          staticClass: "title mx-auto",
+                                          staticStyle: { "max-width": "70%" }
+                                        },
+                                        [
+                                          _vm._v(
+                                            "\n                            Поделитесь интересным местом с другими!\n                        "
+                                          )
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "v-btn",
+                                        {
+                                          staticClass: "mt-2 v-btn--active",
+                                          attrs: {
+                                            large: "",
+                                            rounded: "",
+                                            text: ""
+                                          },
+                                          on: {
+                                            click: function($event) {
+                                              _vm.createDialog = true
+                                            }
+                                          }
+                                        },
+                                        [
+                                          _vm._v(
+                                            "\n                            Добавить\n                        "
+                                          )
+                                        ]
+                                      )
+                                    ],
+                                    1
+                                  )
+                                ],
+                                1
+                              )
+                            ]
+                          }
+                        }
+                      ],
+                      null,
+                      false,
+                      1236261734
+                    )
+                  })
+                ],
+                1
+              )
+            : _vm._e()
+        ],
+        2
+      ),
+      _vm._v(" "),
+      _c("CreateTourDialog", {
+        attrs: { showCreateDialog: _vm.createDialog, dialogType: "Tour" },
+        on: {
+          "update:showCreateDialog": function($event) {
+            _vm.createDialog = $event
+          },
+          "update:show-create-dialog": function($event) {
+            _vm.createDialog = $event
+          }
+        }
+      })
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./resources/js/pages/Tours.vue":
+/*!**************************************!*\
+  !*** ./resources/js/pages/Tours.vue ***!
+  \**************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Tours_vue_vue_type_template_id_5c70b83c___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Tours.vue?vue&type=template&id=5c70b83c& */ "./resources/js/pages/Tours.vue?vue&type=template&id=5c70b83c&");
+/* harmony import */ var _Tours_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Tours.vue?vue&type=script&lang=js& */ "./resources/js/pages/Tours.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* harmony import */ var _node_modules_vuetify_loader_lib_runtime_installComponents_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../node_modules/vuetify-loader/lib/runtime/installComponents.js */ "./node_modules/vuetify-loader/lib/runtime/installComponents.js");
+/* harmony import */ var _node_modules_vuetify_loader_lib_runtime_installComponents_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vuetify_loader_lib_runtime_installComponents_js__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var vuetify_lib_components_VBtn__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vuetify/lib/components/VBtn */ "./node_modules/vuetify/lib/components/VBtn/index.js");
+/* harmony import */ var vuetify_lib_components_VCard__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vuetify/lib/components/VCard */ "./node_modules/vuetify/lib/components/VCard/index.js");
+/* harmony import */ var vuetify_lib_components_VGrid__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! vuetify/lib/components/VGrid */ "./node_modules/vuetify/lib/components/VGrid/index.js");
+/* harmony import */ var vuetify_lib_components_transitions__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! vuetify/lib/components/transitions */ "./node_modules/vuetify/lib/components/transitions/index.js");
+/* harmony import */ var vuetify_lib_components_VHover__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! vuetify/lib/components/VHover */ "./node_modules/vuetify/lib/components/VHover/index.js");
+/* harmony import */ var vuetify_lib_components_VImg__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! vuetify/lib/components/VImg */ "./node_modules/vuetify/lib/components/VImg/index.js");
+/* harmony import */ var vuetify_lib_components_VOverlay__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! vuetify/lib/components/VOverlay */ "./node_modules/vuetify/lib/components/VOverlay/index.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _Tours_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Tours_vue_vue_type_template_id_5c70b83c___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Tours_vue_vue_type_template_id_5c70b83c___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* vuetify-loader */
+
+
+
+
+
+
+
+
+
+
+_node_modules_vuetify_loader_lib_runtime_installComponents_js__WEBPACK_IMPORTED_MODULE_3___default()(component, {VBtn: vuetify_lib_components_VBtn__WEBPACK_IMPORTED_MODULE_4__["VBtn"],VCard: vuetify_lib_components_VCard__WEBPACK_IMPORTED_MODULE_5__["VCard"],VCardTitle: vuetify_lib_components_VCard__WEBPACK_IMPORTED_MODULE_5__["VCardTitle"],VCol: vuetify_lib_components_VGrid__WEBPACK_IMPORTED_MODULE_6__["VCol"],VFadeTransition: vuetify_lib_components_transitions__WEBPACK_IMPORTED_MODULE_7__["VFadeTransition"],VHover: vuetify_lib_components_VHover__WEBPACK_IMPORTED_MODULE_8__["VHover"],VImg: vuetify_lib_components_VImg__WEBPACK_IMPORTED_MODULE_9__["VImg"],VOverlay: vuetify_lib_components_VOverlay__WEBPACK_IMPORTED_MODULE_10__["VOverlay"],VRow: vuetify_lib_components_VGrid__WEBPACK_IMPORTED_MODULE_6__["VRow"]})
+
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/pages/Tours.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/pages/Tours.vue?vue&type=script&lang=js&":
+/*!***************************************************************!*\
+  !*** ./resources/js/pages/Tours.vue?vue&type=script&lang=js& ***!
+  \***************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vuetify_loader_lib_loader_js_ref_10_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Tours_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vuetify-loader/lib/loader.js??ref--10-0!../../../node_modules/vue-loader/lib??vue-loader-options!./Tours.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vuetify-loader/lib/loader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/Tours.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vuetify_loader_lib_loader_js_ref_10_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Tours_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/pages/Tours.vue?vue&type=template&id=5c70b83c&":
+/*!*********************************************************************!*\
+  !*** ./resources/js/pages/Tours.vue?vue&type=template&id=5c70b83c& ***!
+  \*********************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vuetify_loader_lib_loader_js_ref_10_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Tours_vue_vue_type_template_id_5c70b83c___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vuetify-loader/lib/loader.js??ref--10-0!../../../node_modules/vue-loader/lib??vue-loader-options!./Tours.vue?vue&type=template&id=5c70b83c& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vuetify-loader/lib/loader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/Tours.vue?vue&type=template&id=5c70b83c&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vuetify_loader_lib_loader_js_ref_10_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Tours_vue_vue_type_template_id_5c70b83c___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vuetify_loader_lib_loader_js_ref_10_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Tours_vue_vue_type_template_id_5c70b83c___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ })
+
+}]);

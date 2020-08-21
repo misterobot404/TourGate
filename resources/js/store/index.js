@@ -4,7 +4,6 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 
 import auth from "./modules/auth"
-import applications from "./modules/applications"
 import tours from './modules/tours'
 
 export default new Vuex.Store({
@@ -19,7 +18,6 @@ export default new Vuex.Store({
     },
     modules: {
         auth,
-        applications,
         tours
     }
 })

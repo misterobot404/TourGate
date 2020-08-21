@@ -11,21 +11,23 @@ export default {
     },
     getters: {},
     actions: {
-        getTours({commit}, parent_id = '') {
-            return axios.get('/api/tours/' + parent_id).then(response => {
+        getTours({commit}, payload) {
+            if (payload.parent_id === undefined) payload.parent_id = '';
+            if (payload.status === undefined) payload.status = 'published';
+
+            let requestUrl = '/api/tours/' + payload.status + '/' + payload.parent_id;
+            return axios.get(requestUrl).then(response => {
                 commit('SET_TOURS', response.data.data.tours);
                 commit('SET_BREADCRUMBS', response.data.data.breadcrumbs);
             })
         },
         createTour({getters, commit}, tour) {
             return axios.post('/api/tours',
-                tour,
-                {
+                tour, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
                     }
-                })
-                .then(response => {
+                }).then(response => {
                     commit('SET_TOURS', response.data.data.tours);
                 })
         },
@@ -47,6 +49,21 @@ export default {
                 .then(response => {
                     commit('UPDATE_TOUR', response.data.data.tour);
                 })
+        },
+        restoreTour({commit}, tourId) {
+            return axios.put('/api/tours/' + tourId + '/restore')
+                .then(response => {
+                    commit('SET_TOURS', response.data.data.tours);
+                })
+        },
+        publishTour({commit}, tourId) {
+            return axios.put('/api/tours/' + tourId + '/publish')
+                .then(response => {
+                    commit('SET_TOURS', response.data.data.tours);
+                })
+        },
+        getFiles({state}) {
+            return axios.get('/api/tours/' + state.editableTourId + '/files').then(response => {})
         }
     },
     mutations: {

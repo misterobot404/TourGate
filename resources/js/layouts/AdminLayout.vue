@@ -1,28 +1,22 @@
 <template>
     <div>
-        <!-- Admin is not log in -->
+        <!-- Admin is not log in  -->
         <AuthDialog v-if="!isAuth"/>
         <!-- Admin log in -->
         <div v-else>
             <v-row class="white--text align-center">
-                <span
-                    @click="$router.push({name:'Tours'})"
-                    class="display-1 my-4"
-                    style="cursor: pointer"
-                >
-                    TourGis
-                </span>
+                <router-link :to="{name: 'Tours'}" class="text-decoration-none" style="color: white">
+                    <span class="display-1 my-4">
+                        TourGate
+                    </span>
+                </router-link>
                 <v-divider
                     class="my-2 mx-4"
                     vertical
                     dark
                     inset
                 />
-                <span
-                    @click="$route.fullPath === '/admin/tours' ? $router.go(0) :$router.push({name:'Admin'})"
-                    style="cursor: pointer"
-                    class="title my-4"
-                >
+                <span class="title my-4">
                     Administrator
                 </span>
                 <v-divider
@@ -34,21 +28,29 @@
                 <v-btn
                     dark
                     text
-                    :to="{name: 'TourManagement'}"
+                    :to="{ name: 'TourManagement', params: { status: 'published' } }"
                     class="mr-2"
                 >
-                    Управление
+                    Публикуемое
                 </v-btn>
                 <v-btn
                     dark
                     text
-                    :to="{name: 'ApplicationManagement'}"
+                    :to="{ name: 'TourManagement', params: { status: 'new' } }"
+                    class="mr-2"
                 >
                     Заявки
                 </v-btn>
+                <v-btn
+                    dark
+                    text
+                    :to="{ name: 'TourManagement', params: { status: 'deleted' } }"
+                >
+                    Удалённое
+                </v-btn>
             </v-row>
 
-            <div class="mt-4">
+            <div class="mt-6">
                 <slot/>
             </div>
         </div>

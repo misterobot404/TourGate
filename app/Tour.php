@@ -3,13 +3,31 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Storage;
 
 class Tour extends Model
 {
-    /**
-     * Determines the need for time stamps.
-     *
-     * @var bool
-     */
-    public $timestamps = false;
+    protected $casts = [
+        'author_doc' => 'array',
+    ];
+
+    public function children()
+    {
+        return $this->hasMany('App\Tour','parent_id')->with('children');
+    }
+
+    public static function boot() {
+        parent::boot();
+
+        static::deleting(function($tour) {
+            // remove images
+            Storage::disk('public')->delete('images_tours/'.basename($tour->image_url));
+            // remove docs
+            /*foreach ($tour->author_doc as $doc) {
+                Storage::disk('public')->delete('author_doc/'.basename($doc));
+            }*/
+            // deleting children
+            $tour->children()->get()->each(fn($el) => $el->delete());
+        });
+    }
 }
