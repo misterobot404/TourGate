@@ -5,7 +5,7 @@
         dark
         style="background: rgba(30,30,30, 0.4)"
     >
-        <v-breadcrumbs large :items="breadcrumbs" class="mb-4">
+        <v-breadcrumbs large :items="breadcrumbs">
             <template v-slot:item="{ item }">
                 <router-link :to="item.href" class="text-decoration-none text-uppercase" style="color: white">
                     <v-breadcrumbs-item :class="item.href === $route.path ? 'breadcrumbs-item-active' : null">

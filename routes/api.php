@@ -1,6 +1,6 @@
 <?php
-// get files
-Route::get('/tours/{id}/files', 'API\TourController@getFiles');
+// Get files
+Route::middleware('auth:api')->get('/tours/{id}/files', 'API\TourController@getFiles');
 
 Route::get('/tours/{status}/{parent_id?}', 'API\TourController@index');
 Route::post('/tours', 'API\TourController@store');

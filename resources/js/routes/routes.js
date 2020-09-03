@@ -9,7 +9,7 @@ export const routes = [
         path: '/admin',
         redirect: '/admin/tours/published'
     },
-    // tours
+    // main pages
     {
         path: '/tours/:id?',
         name: 'Tours',
@@ -17,11 +17,10 @@ export const routes = [
         props: true,
         meta: { layout: "DefaultLayout" }
     },
-    // tour management
     {
         path: '/admin/tours/:status/:id?',
         name: 'TourManagement',
-        component: () => import(/* webpackChunkName: 'tour-management' */ '@/pages/TourManagement'),
+        component: () => import(/* webpackChunkName: 'tours' */ '@/pages/Tours'),
         meta: { layout: "AdminLayout" }
     },
     // url not found

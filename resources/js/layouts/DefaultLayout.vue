@@ -9,6 +9,7 @@
             class="mx-auto"
             style="cursor: pointer"
         />
+        <!-- Page -->
         <slot/>
     </div>
 </template>

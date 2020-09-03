@@ -26,6 +26,8 @@ class CreateToursTable extends Migration
             $table->boolean('isSection')->default(false);
             // статус записи: new, deleted, published
             $table->string('status')->default("new");
+            // статус записи до удаления: new, deleted
+            $table->string('previous_status')->nullable();
             // дата создания / обновления записи
             $table->timestamps();
 
@@ -40,8 +42,6 @@ class CreateToursTable extends Migration
             $table->string('image_url');
             // ссылка на страницу в интернете для данного объекта туризма
             $table->string('source_url')->nullable();
-            // продолжительность тура
-            $table->string('duration')->nullable();
             // наименеование организации, предоставляющей доступ к объекту туризма
             $table->string('organization_name')->nullable();
             // контактный телефон для объекта туризма

@@ -23,9 +23,11 @@ class Tour extends Model
             // remove images
             Storage::disk('public')->delete('images_tours/'.basename($tour->image_url));
             // remove docs
-            /*foreach ($tour->author_doc as $doc) {
-                Storage::disk('public')->delete('author_doc/'.basename($doc));
-            }*/
+            if ($tour->author_doc) {
+                foreach ($tour->author_doc as $doc) {
+                    Storage::disk('public')->delete('author_doc/' . basename($doc));
+                }
+            }
             // deleting children
             $tour->children()->get()->each(fn($el) => $el->delete());
         });

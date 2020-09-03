@@ -4,9 +4,13 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Tour;
+use App\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Storage;
 use ZipArchive;
+use Hash;
+use File;
+use Request;
 
 class TourController extends Controller
 {
@@ -24,7 +28,7 @@ class TourController extends Controller
             return response()->json([
                 "status" => "fail",
                 "data" => ["status" => "Access denied"]
-            ], 403);
+            ], 401);
         }
         // Get tours
         if ($status === "published") {
@@ -72,23 +76,23 @@ class TourController extends Controller
         $tour->title = request('title');
         $tour->description = request('description');
 
-        $path = request()->file('image')->storeAs('images_tours/', request()->file('image')->getClientOriginalName(), 'public');
+        $path = request()->file('image')->store('images_tours/', 'public');
         $tour->image_url = '/storage/' . $path;
         unset(request()->image);
 
         $tour->isSection = request('isSection');
         if ($tour->isSection === "false") {
-            if (request('source_url') !== 'undefined') $tour->source_url = request('source_url');
-            if (request('address') !== 'undefined') $tour->address = request('address');
-            if (request('organization_name') !== 'undefined') $tour->organization_name = request('organization_name');
-            if (request('organization_phone') !== 'undefined') $tour->organization_phone = request('organization_phone');
-            if (request('organization_email') !== 'undefined') $tour->organization_email = request('organization_email');
-            if (request('organization_address') !== 'undefined') $tour->organization_address = request('organization_address');
+            if (request('source_url')) $tour->source_url = request('source_url');
+            if (request('address')) $tour->address = request('address');
+            if (request('organization_name')) $tour->organization_name = request('organization_name');
+            if (request('organization_phone')) $tour->organization_phone = request('organization_phone');
+            if (request('organization_email')) $tour->organization_email = request('organization_email');
+            if (request('organization_address')) $tour->organization_address = request('organization_address');
 
             if (request()->hasFile('author_doc')) {
                 $author_doc = [];
                 foreach (request()->author_doc as $doc) {
-                    $path = $doc->storeAs('author_doc', $doc->getClientOriginalName(), 'public');
+                    $path = $doc->store('author_doc', 'public');
                     array_push($author_doc, '/storage/' . $path);
                 }
                 $tour->author_doc = $author_doc;
@@ -96,11 +100,11 @@ class TourController extends Controller
         }
         if (auth()->guard('api')->check()) {
             $tour->author = "admin";
-            $tour->author_email = "misterobot404@gmail.com";
+            if (request('author_email')) $tour->author_email = request('author_email');
         } else {
             $tour->author = "user";
-            $tour->author_phone = request('author_phone');
-            $tour->author_email = request('author_email');
+            if (request('author_phone')) $tour->author_phone = request('author_phone');
+            if (request('author_email')) $tour->author_email = request('author_email');
         }
         $tour->save();
 
@@ -133,11 +137,11 @@ class TourController extends Controller
             ], 404);
         }
 
-        // title
+        // set title
         $tour->title = request('title');
-        // description
+        // set description
         $tour->description = request('description');
-        // image
+        // set image
         if (request()->hasFile('image')) {
             // remove old image from storage
             Storage::disk('public')->delete('images_tours/' . basename($tour->image_url));
@@ -145,13 +149,14 @@ class TourController extends Controller
             $path = request()->file('image')->store('images_tours', 'public');
             $tour->image_url = '/storage/' . $path;
         }
+        // set other fields
         if (!$tour->isSection) {
-            if (request('source_url') !== 'undefined') $tour->source_url = request('source_url');
-            if (request('address') !== 'undefined') $tour->address = request('address');
-            if (request('organization_name') !== 'undefined') $tour->organization_name = request('organization_name');
-            if (request('organization_phone') !== 'undefined') $tour->organization_phone = request('organization_phone');
-            if (request('organization_email') !== 'undefined') $tour->organization_email = request('organization_email');
-            if (request('organization_address') !== 'undefined') $tour->organization_address = request('organization_address');
+            $tour->source_url = request('source_url');
+            $tour->address = request('address');
+            $tour->organization_name = request('organization_name');
+            $tour->organization_phone = request('organization_phone');
+            $tour->organization_email = request('organization_email');
+            $tour->organization_address = request('organization_address');
         }
         $tour->save();
 
@@ -181,22 +186,25 @@ class TourController extends Controller
             ], 404);
         }
 
-        $tour_parent_id = $tour->parent_id;
-        $tour_status = $tour->status;
-        // mark as deleted
-        if ($tour_status === 'published') {
+        $parent_id = $tour->parent_id;
+        $previous_status = $tour->status;
+        // delete permanently
+        if ($tour->status === 'deleted') {
+            Tour::destroy($id);
+        } // mark as deleted
+        else {
+            $tour->previous_status = $previous_status;
             $tour->status = 'deleted';
             $tour->save();
-        } // delete permanently
-        else {
-            Tour::destroy($id);
         }
 
-        // Get tours of the current parent_id and status.
-        $tours = Tour::where([
-            'parent_id' => $tour_parent_id,
-            'status' => $tour_status
-        ])->get();
+        // Get tours
+        if ($previous_status === "published") {
+            $tours = Tour::where([
+                'parent_id' => $parent_id,
+                'status' => $previous_status
+            ])->get();
+        } else $tours = Tour::where(['status' => $previous_status])->get();
 
         return response()->json([
             "status" => "success",
@@ -244,7 +252,8 @@ class TourController extends Controller
             ], 404);
         }
 
-        $tour->status = 'published';
+        $tour->status = $tour->previous_status;
+        $tour->previous_status = null;
         $tour->save();
 
         // Get all tours of the current parent_id and status.
@@ -258,10 +267,11 @@ class TourController extends Controller
         ], 200);
     }
 
-    // Get files
+    // Get tour files
     public function getFiles($id)
     {
         $tour = Tour::find($id);
+        // check tour
         if (!$tour) {
             return response()->json([
                 "status" => "fail",
@@ -271,17 +281,14 @@ class TourController extends Controller
             ], 404);
         }
 
-        /*$files = array(request()->author_doc);
-        $zipname = 'file.zip';
-        $zip = new ZipArchive;
-        $zip->open($zipname, ZipArchive::CREATE);
-        foreach ($files as $file) {
-            $zip->addFile($file);
-        }
-        $zip->close();*/
-        foreach ($tour->author_doc as $file) {
-            return response()->file($file);
+        $zip_name = 'docs.zip';
+        $zip = new ZipArchive();
+        if ($zip->open($zip_name, ZipArchive::CREATE | ZIPARCHIVE::OVERWRITE) === TRUE) {
+            foreach ($tour->author_doc as $key => $doc) {
+                $zip->addFile('storage/author_doc/' . basename($doc), $key.'.'.pathinfo($doc)['extension']);
+            }
+            $zip->close();
+            return response()->download($zip_name)->deleteFileAfterSend();
         }
     }
-
 }

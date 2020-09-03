@@ -28,8 +28,8 @@ export default {
                         'Content-Type': 'multipart/form-data'
                     }
                 }).then(response => {
-                    commit('SET_TOURS', response.data.data.tours);
-                })
+                commit('SET_TOURS', response.data.data.tours);
+            })
         },
         destroyTour({commit}, tourId) {
             return axios.delete('/api/tours/' + tourId)
@@ -63,7 +63,13 @@ export default {
                 })
         },
         getFiles({state}) {
-            return axios.get('/api/tours/' + state.editableTourId + '/files').then(response => {})
+            return axios.get('/api/tours/' + state.editableTourId + '/files', { responseType: 'arraybuffer'})
+                .then(response => {
+                    const link = document.createElement('a');
+                    link.href = window.URL.createObjectURL(new Blob([response.data]));
+                    link.download = 'docs.zip';
+                    link.click();
+                })
         }
     },
     mutations: {

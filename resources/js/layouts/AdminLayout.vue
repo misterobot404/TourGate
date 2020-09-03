@@ -1,9 +1,10 @@
 <template>
     <div>
-        <!-- Admin is not log in  -->
+        <!-- Not auth  -->
         <AuthDialog v-if="!isAuth"/>
-        <!-- Admin log in -->
-        <div v-else>
+        <!-- Auth -->
+        <template v-else>
+            <!-- Navigation bar -->
             <v-row class="white--text align-center">
                 <router-link :to="{name: 'Tours'}" class="text-decoration-none" style="color: white">
                     <span class="display-1 my-4">
@@ -49,27 +50,27 @@
                     Удалённое
                 </v-btn>
             </v-row>
-
-            <div class="mt-6">
-                <slot/>
-            </div>
-        </div>
+            <!-- Create tour/section buttons -->
+            <CreateDialog v-if="$route.params.status === 'published'" class="my-6"/>
+            <!-- Page -->
+            <slot/>
+        </template>
     </div>
 </template>
 
 <script>
 import {mapGetters} from 'vuex'
-import AuthDialog from "@/components/AdminLayout/AuthDialog"
+import AuthDialog from "@/components/AuthDialog"
+import CreateDialog from "@/components/CreateDialog.vue"
 
 export default {
     name: "AdminLayout",
     components: {
-        AuthDialog
+        AuthDialog,
+        CreateDialog
     },
     computed: {
-        ...mapGetters('auth', [
-            'isAuth'
-        ])
+        ...mapGetters('auth', ['isAuth'])
     }
 }
 </script>
