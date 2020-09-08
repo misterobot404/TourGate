@@ -2605,6 +2605,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "DefaultLayout"
 });
@@ -8034,29 +8040,56 @@ var render = function() {
   return _c(
     "div",
     [
-      _c("v-img", {
-        staticClass: "mx-auto",
-        staticStyle: { cursor: "pointer" },
-        attrs: {
-          "max-width": "300",
-          contain: "",
-          src: __webpack_require__(/*! @/assets/logo.png */ "./resources/js/assets/logo.png")
-        },
-        on: {
-          click: function($event) {
-            _vm.$route.fullPath === "/tours"
-              ? _vm.$router.go(0)
-              : _vm.$router.push({ name: "Tours" })
-          }
-        }
-      }),
+      _c(
+        "div",
+        { staticClass: "d-flex justify-center my-10" },
+        [
+          _c("v-img", {
+            staticClass: "mb-3",
+            staticStyle: { cursor: "pointer" },
+            attrs: {
+              "max-width": "80",
+              contain: "",
+              src: __webpack_require__(/*! @/assets/logo.png */ "./resources/js/assets/logo.png")
+            },
+            on: {
+              click: function($event) {
+                _vm.$route.fullPath === "/tours"
+                  ? _vm.$router.go(0)
+                  : _vm.$router.push({ name: "Tours" })
+              }
+            }
+          }),
+          _vm._v(" "),
+          _vm._m(0)
+        ],
+        1
+      ),
       _vm._v(" "),
       _vm._t("default")
     ],
     2
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass:
+          "text-h4 font-weight-bold white--text align-self-center ml-6"
+      },
+      [
+        _c("div", [_vm._v("Путеводитель для туриста.")]),
+        _vm._v(" "),
+        _c("div", [_vm._v("Комсомольск-на-Амуре.")])
+      ]
+    )
+  }
+]
 render._withStripped = true
 
 
@@ -51168,7 +51201,8 @@ __webpack_require__.r(__webpack_exports__);
           self: true
         },
         value: this.onScroll
-      }]
+      }],
+      on: this.$listeners
     }, [content]);
   }
 
@@ -53285,7 +53319,7 @@ class Vuetify {
 }
 Vuetify.install = _install__WEBPACK_IMPORTED_MODULE_0__["install"];
 Vuetify.installed = false;
-Vuetify.version = "2.3.9";
+Vuetify.version = "2.3.10";
 Vuetify.config = {
   silent: false
 };
@@ -67345,7 +67379,7 @@ module.exports = "/images/background.jpg?52c575715c8ce1d9ff2feda80d094ce8";
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "/images/logo.png?4851623be58ce630d0a62654fcd5f140";
+module.exports = "/images/logo.png?94a993a89295449a7de49545ff44c8fc";
 
 /***/ }),
 

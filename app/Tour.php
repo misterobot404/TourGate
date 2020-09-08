@@ -29,7 +29,9 @@ class Tour extends Model
                 }
             }
             // deleting children
-            $tour->children()->get()->each(fn($el) => $el->delete());
+            $tour->children()->get()->each(function ($el) {
+                $el->delete();
+            });
         });
     }
 }
