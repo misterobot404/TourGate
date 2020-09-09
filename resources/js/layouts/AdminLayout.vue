@@ -5,21 +5,19 @@
         <!-- Auth -->
         <template v-else>
             <!-- Navigation bar -->
-            <v-row class="white--text align-center">
-                <router-link :to="{name: 'Tours'}" class="text-decoration-none" style="color: white">
-                    <span class="display-1 my-4">
-                        TourGate
-                    </span>
-                </router-link>
-                <v-divider
-                    class="my-2 mx-4"
-                    vertical
-                    dark
-                    inset
+            <v-row class="white--text align-center my-4">
+                <v-img
+                    @click="$route.fullPath === '/tours' ? $router.go(0) : $router.push({name:'Tours'})"
+                    max-width="40"
+                    contain
+                    :src="require('@/assets/logo.png')"
+                    style="cursor: pointer"
+                    class="mb-3"
                 />
-                <span class="title my-4">
-                    Administrator
-                </span>
+                <div class="text-h4 font-weight-bold white--text align-self-center ml-4">
+                    {{ currentLocation }}
+                    <EditLocationsDialog/>
+                </div>
                 <v-divider
                     class="my-2 mx-4"
                     vertical
@@ -59,18 +57,26 @@
 </template>
 
 <script>
-import {mapGetters} from 'vuex'
+import {mapState, mapGetters} from 'vuex'
 import AuthDialog from "@/components/AuthDialog"
 import CreateDialog from "@/components/CreateDialog.vue"
+import EditLocationsDialog from "@/components/EditLocationsDialog.vue"
 
 export default {
     name: "AdminLayout",
     components: {
         AuthDialog,
-        CreateDialog
+        CreateDialog,
+        EditLocationsDialog
+    },
+    data() {
+        return {
+            showEditLocationsDialog: false
+        }
     },
     computed: {
-        ...mapGetters('auth', ['isAuth'])
+        ...mapGetters('auth', ['isAuth']),
+        ...mapState('locations', ['currentLocation'])
     }
 }
 </script>

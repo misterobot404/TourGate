@@ -8,7 +8,7 @@
             class="mt-2 mb-8"
         >
             <v-col
-                v-for="(tour,index) in tours"
+                v-for="(tour,index) in toursByLocation"
                 :key="tour.id"
                 :cols="$vuetify.breakpoint.xs ? 12 : index % 3 ? 6 : 12"
             >
@@ -208,6 +208,10 @@ export default {
             'tours',
             'editableTourId'
         ]),
+        ...mapState('locations', ['currentLocation',]),
+        toursByLocation() {
+            return this.tours.filter(tour => tour.location === this.currentLocation || tour.location === null)
+        },
         sectionNotFound() {
             return this.tours.find(element => element.isSection === true) === undefined;
         }

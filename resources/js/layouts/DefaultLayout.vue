@@ -12,7 +12,10 @@
             />
             <div class="text-h4 font-weight-bold white--text align-self-center ml-6">
                 <div>Путеводитель для туриста.</div>
-                <div>Комсомольск-на-Амуре.</div>
+                <div>
+                    {{currentLocation}}
+                    <LocationSelectDialog/>
+                </div>
             </div>
         </div>
         <!-- Page -->
@@ -21,8 +24,22 @@
 </template>
 
 <script>
+import LocationSelectDialog from "@/components/LocationSelectDialog"
+import {mapState} from 'vuex'
+
 export default {
-    name: "DefaultLayout"
+    name: "DefaultLayout",
+    components: {
+        LocationSelectDialog
+    },
+    data() {
+        return {
+            showLocationSelectDialog: false
+        }
+    },
+    computed: {
+        ...mapState('locations',['currentLocation'])
+    }
 }
 </script>
 

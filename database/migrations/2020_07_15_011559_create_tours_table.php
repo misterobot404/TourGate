@@ -60,6 +60,12 @@ class CreateToursTable extends Migration
             $table->string('author_email')->nullable();
             // документы, подтверждающие легитимность заявителя
             $table->jsonb('author_doc')->nullable();
+
+            // локация
+            $table->integer('location')->unsigned();
+            $table->foreign('location')
+                ->references('name')->on('locations')
+                ->onDelete('set null');
         });
     }
 

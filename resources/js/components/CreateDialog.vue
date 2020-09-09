@@ -245,7 +245,7 @@
 </template>
 
 <script>
-import {mapActions} from 'vuex'
+import {mapState, mapActions} from 'vuex'
 
 export default {
     name: "CreateDialog",
@@ -261,6 +261,7 @@ export default {
         }
     },
     computed: {
+        ...mapState('locations',['currentLocation']),
         tour_parent_id() {
             return this.$route.params.id === undefined ? null : this.$route.params.id
         }
@@ -290,6 +291,7 @@ export default {
                 if (this.tour.organization_address) formData.append('organization_address', this.tour.organization_address);
                 if (this.tour.author_phone) formData.append('author_phone', this.tour.author_phone);
                 if (this.tour.author_email) formData.append('author_email', this.tour.author_email);
+                formData.append('location', this.currentLocation);
 
                 if (this.tour.author_doc) {
                     for (let i = 0; i < this.tour.author_doc.length; i++) {

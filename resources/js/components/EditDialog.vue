@@ -185,8 +185,33 @@
                                                     required
                                                 />
                                             </v-col>
-                                            <!-- author_doc -->
+                                            <!-- location -->
                                             <v-col cols="12" class="pb-0 pt-1">
+                                                <v-menu offset-y>
+                                                    <template v-slot:activator="{ on }">
+                                                        <v-text-field
+                                                            label="Локация тур. обьекта"
+                                                            readonly
+                                                            filled
+                                                            hide-details
+                                                            style="cursor: pointer !important;"
+                                                            :value="editableTour.location"
+                                                            v-on="on"
+                                                        />
+                                                    </template>
+                                                    <v-list>
+                                                        <v-list-item
+                                                            v-for="(location, index) in locations"
+                                                            :key="index"
+                                                            @click="editableTour.location = location"
+                                                        >
+                                                            <v-list-item-title v-text="location"/>
+                                                        </v-list-item>
+                                                    </v-list>
+                                                </v-menu>
+                                            </v-col>
+                                            <!-- author_doc -->
+                                            <v-col cols="12" class="pb-0 pt-8">
                                                 <v-btn
                                                     @click="getFiles"
                                                     :disabled="!editableTour.author_doc"
@@ -263,6 +288,9 @@ export default {
         ...mapState('tours', [
             'tours',
             'editableTourId'
+        ]),
+        ...mapState('locations', [
+            'locations'
         ])
     },
     watch: {
@@ -297,6 +325,7 @@ export default {
                 if (this.editableTour.organization_phone) formData.append('organization_phone', this.editableTour.organization_phone);
                 if (this.editableTour.organization_email) formData.append('organization_email', this.editableTour.organization_email);
                 if (this.editableTour.organization_address) formData.append('organization_address', this.editableTour.organization_address);
+                formData.append('location', this.editableTour.location);
             }
 
             let payload = {

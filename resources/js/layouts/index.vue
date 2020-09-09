@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import {mapState} from 'vuex'
+import {mapActions, mapState} from 'vuex'
 import AdminLayout from "./AdminLayout"
 import DefaultLayout from "./DefaultLayout"
 export default {
@@ -34,6 +34,12 @@ export default {
     },
     computed: {
         ...mapState(['pageLoading'])
+    },
+    methods: {
+      ...mapActions('locations',['getLocations'])
+    },
+    mounted() {
+        this.getLocations()
     }
 }
 </script>

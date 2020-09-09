@@ -1,6 +1,7 @@
 import axios from "axios"
 import route from "@/routes"
-import shuffle from "lodash/shuffle";
+import shuffle from "lodash/shuffle"
+import Vue from 'vue'
 
 export default {
     namespaced: true,
@@ -9,7 +10,6 @@ export default {
         breadcrumbs: [],
         editableTourId: null
     },
-    getters: {},
     actions: {
         getTours({commit}, payload) {
             if (payload.parent_id === undefined) payload.parent_id = '';
@@ -63,7 +63,7 @@ export default {
                 })
         },
         getFiles({state}) {
-            return axios.get('/api/tours/' + state.editableTourId + '/files', { responseType: 'arraybuffer'})
+            return axios.get('/api/tours/' + state.editableTourId + '/files', {responseType: 'arraybuffer'})
                 .then(response => {
                     const link = document.createElement('a');
                     link.href = window.URL.createObjectURL(new Blob([response.data]));
@@ -79,13 +79,11 @@ export default {
             } else state.tours = shuffle(tours);
         },
         UPDATE_TOUR: (state, newTour) => {
-            let oldTour = state.tours.find(obj => obj.id === newTour.id);
-            oldTour.title = newTour.title;
-            oldTour.description = newTour.description;
-            oldTour.image_url = newTour.image_url;
-            if (!oldTour.isSection) {
-                oldTour.source_url = newTour.source_url;
-            }
+            const index = state.tours.findIndex(obj => obj.id === newTour.id)
+            // using Vue.set
+            Vue.set(state.tours, index, newTour)
+            // using Array.splice
+            state.tours.splice(index, 1, newTour)
         },
         SET_BREADCRUMBS: (state, breadcrumbs) => {
             let routePathWithoutParams = route.currentRoute.path.replace(route.currentRoute.params.id, '')

@@ -1,5 +1,6 @@
 {
     "/js/main.js": "/js/main.js",
     "/page404.js": "/page404.js",
-    "/tours.js": "/tours.js"
+    "/tours.js": "/tours.js",
+    "/vendors~tours.js": "/vendors~tours.js"
 }

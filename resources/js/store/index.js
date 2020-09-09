@@ -5,6 +5,7 @@ Vue.use(Vuex)
 
 import auth from "./modules/auth"
 import tours from './modules/tours'
+import locations from "./modules/locations";
 
 export default new Vuex.Store({
     strict: true,
@@ -18,7 +19,8 @@ export default new Vuex.Store({
     },
     modules: {
         auth,
-        tours
+        tours,
+        locations
     }
 })
 

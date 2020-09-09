@@ -88,6 +88,7 @@ class TourController extends Controller
             if (request('organization_phone')) $tour->organization_phone = request('organization_phone');
             if (request('organization_email')) $tour->organization_email = request('organization_email');
             if (request('organization_address')) $tour->organization_address = request('organization_address');
+            $tour->location = request('location');
 
             if (request()->hasFile('author_doc')) {
                 $author_doc = [];
@@ -157,6 +158,7 @@ class TourController extends Controller
             $tour->organization_phone = request('organization_phone');
             $tour->organization_email = request('organization_email');
             $tour->organization_address = request('organization_address');
+            $tour->location = request('location');
         }
         $tour->save();
 
