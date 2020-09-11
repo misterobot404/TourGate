@@ -290,7 +290,8 @@ export default {
             'editableTourId'
         ]),
         ...mapState('locations', [
-            'locations'
+            'locations',
+            'currentLocation'
         ])
     },
     watch: {
@@ -306,6 +307,8 @@ export default {
         }),
         getEditableTourClone() {
             this.editableTour = Object.assign({}, this.tours.find(obj => obj.id === this.editableTourId));
+            this.editableTour.location =  this.currentLocation;
+
             if (this.editableTour.author_doc) {
                 this.editableTour.author_doc.forEach(function (part, index) {
                     this[index] = this[index].replace(/^.*[\\\/]/, '');
@@ -326,6 +329,7 @@ export default {
                 if (this.editableTour.organization_email) formData.append('organization_email', this.editableTour.organization_email);
                 if (this.editableTour.organization_address) formData.append('organization_address', this.editableTour.organization_address);
                 formData.append('location', this.editableTour.location);
+
             }
 
             let payload = {
