@@ -190,12 +190,13 @@
                                                 <v-menu offset-y>
                                                     <template v-slot:activator="{ on }">
                                                         <v-text-field
-                                                            label="Локация тур. обьекта"
+                                                            label="Локация тур. обьекта*"
                                                             readonly
                                                             filled
                                                             hide-details
                                                             style="cursor: pointer !important;"
                                                             :value="editableTour.location"
+                                                            :rules="[ v => !!v || 'Выберите локацию' ]"
                                                             v-on="on"
                                                         />
                                                     </template>
@@ -291,7 +292,6 @@ export default {
         ]),
         ...mapState('locations', [
             'locations',
-            'currentLocation'
         ])
     },
     watch: {
@@ -307,7 +307,6 @@ export default {
         }),
         getEditableTourClone() {
             this.editableTour = Object.assign({}, this.tours.find(obj => obj.id === this.editableTourId));
-            this.editableTour.location =  this.currentLocation;
 
             if (this.editableTour.author_doc) {
                 this.editableTour.author_doc.forEach(function (part, index) {
