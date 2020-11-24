@@ -74,9 +74,9 @@ export default {
     },
     mutations: {
         SET_TOURS: (state, tours) => {
-            if (route.currentRoute.name === "TourManagement") {
-                state.tours = tours;
-            } else state.tours = shuffle(tours);
+            let randSections = shuffle(tours.map(el => el.isSection));
+            let randTour = shuffle(tours.map(el => !el.isSection));
+            state.tours = randSections.concat(randTour);
         },
         UPDATE_TOUR: (state, newTour) => {
             const index = state.tours.findIndex(obj => obj.id === newTour.id)

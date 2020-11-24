@@ -150,7 +150,7 @@
             </v-col>
             <!-- Add -->
             <v-col
-                v-if="$route.name === 'Tours' && sectionNotFound && !firstLoading"
+                v-if="$route.name === 'Tours' && !firstLoading"
                 :cols="$vuetify.breakpoint.xs ? 12 : (tours.length + 1) % 3 ? 12 : 6"
                 class="text-center"
             >
