@@ -74,8 +74,8 @@ export default {
     },
     mutations: {
         SET_TOURS: (state, tours) => {
-            let randSections = shuffle(tours.map(el => el.isSection));
-            let randTour = shuffle(tours.map(el => !el.isSection));
+            let randSections = shuffle(tours.filter(el => el.isSection));
+            let randTour = shuffle(tours.filter(el => !el.isSection));
             state.tours = randSections.concat(randTour);
         },
         UPDATE_TOUR: (state, newTour) => {
